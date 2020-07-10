@@ -2,4 +2,6 @@
     <string name="app_name">FixerCurrency</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="check_previous_day_value">Check Previous Day Value</string>
+    <string name="rate_placeholder">rate</string>
+    <string name="title_placeholder">title</string>
 </resources>

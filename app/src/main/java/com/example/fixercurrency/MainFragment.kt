@@ -1,18 +1,14 @@
 package com.example.fixercurrency
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.RecyclerView
 import com.example.fixercurrency.databinding.FragmentMainBinding
-import com.example.fixercurrency.web.FixerApi
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 
 
 class MainFragment : Fragment() {
@@ -23,10 +19,21 @@ class MainFragment : Fragment() {
         val binding = FragmentMainBinding.inflate(layoutInflater)
         binding.lifecycleOwner = this
         binding.viewmodel = mainFragmentViewModel
-        binding.previousDayValueButton.setOnClickListener{
-            mainFragmentViewModel.getPreviousDay()
-        }
+        val adapter = FixerItemAdapter()
+        binding.fixerPropertiesList.adapter = adapter
+        mainFragmentViewModel.listOfExchangeRates.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                adapter.data = it
+            }
+        })
+        binding.fixerPropertiesList.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if(!recyclerView.canScrollVertically(1) && newState==RecyclerView.SCROLL_STATE_IDLE){
+                    mainFragmentViewModel.getPreviousDay()
+                }
+            }
+        })
         return binding.root
     }
-
 }

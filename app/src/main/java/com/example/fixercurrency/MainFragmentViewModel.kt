@@ -19,18 +19,20 @@ class MainFragmentViewModel: ViewModel() {
     private val coroutineScope = CoroutineScope(
         job + Dispatchers.Main )
     var date = Instant.now()
-    var formatter: DateTimeFormatter = DateTimeFormatter
+    private var formatter: DateTimeFormatter = DateTimeFormatter
         .ofPattern("yyyy-MM-dd")
         .withZone(ZoneId.systemDefault())
 
-    val dateString:MutableLiveData<String> by lazy {
-        MutableLiveData<String>()
-    }
-    val plnExchangeValue:MutableLiveData<String> by lazy {
-        MutableLiveData<String>()
+    val listOfExchangeRates = MutableLiveData<MutableList<CurrencyModel>>()
+
+    val dateString = MutableLiveData<String>()
+
+    private fun <T> MutableLiveData<T>.notifyObserver() {
+        this.value = this.value
     }
 
     init {
+        listOfExchangeRates.value = mutableListOf<CurrencyModel>()
         getFixerProperty(formatter.format(date))
     }
 
@@ -46,15 +48,24 @@ class MainFragmentViewModel: ViewModel() {
             val getPropertyDeferred = FixerApi.retrofitService.getHistoricalExchangeAsync(date)
             try {
                 val propertyResult = getPropertyDeferred.await()
-                plnExchangeValue.value = propertyResult.rates.PLN.toString()
+                getRateModelsList(propertyResult.rates.toString())
+                listOfExchangeRates.notifyObserver()
             } catch (e: Exception) {
                 Log.d(TAG, "getFixerProperty: " + e.message)
             }
         }
     }
 
+    fun getRateModelsList(rates:String){
+        val ratePairs = rates.split(",")
+        for (pair in ratePairs) {
+            val splitedPairs = pair.split("=")
+            listOfExchangeRates.value?.add(CurrencyModel(splitedPairs[0], splitedPairs[1]))
+        }
+    }
     override fun onCleared() {
         super.onCleared()
         job.cancel()
     }
 }
+
