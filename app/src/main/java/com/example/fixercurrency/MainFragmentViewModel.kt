@@ -19,6 +19,8 @@ class MainFragmentViewModel: ViewModel() {
     private val coroutineScope = CoroutineScope(
         job + Dispatchers.Main )
     var date = Instant.now()
+
+    val navigateToSelectedProperty = MutableLiveData<CurrencyModel>()
     private var formatter: DateTimeFormatter = DateTimeFormatter
         .ofPattern("yyyy-MM-dd")
         .withZone(ZoneId.systemDefault())
@@ -63,6 +65,14 @@ class MainFragmentViewModel: ViewModel() {
             listOfExchangeRates.value?.add(CurrencyModel(splitedPairs[0], splitedPairs[1]))
         }
     }
+
+    fun displayCurrencyView(currencyModel: CurrencyModel) {
+        navigateToSelectedProperty.value = currencyModel
+    }
+    fun displayCurrencyViewComplete() {
+        navigateToSelectedProperty.value = null
+    }
+
     override fun onCleared() {
         super.onCleared()
         job.cancel()

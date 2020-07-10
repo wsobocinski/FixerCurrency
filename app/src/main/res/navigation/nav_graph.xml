@@ -9,5 +9,19 @@
         android:id="@+id/mainFragment"
         android:name="com.example.fixercurrency.MainFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_main" />
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_currencyFragment"
+            app:destination="@id/currencyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/currencyFragment"
+        android:name="com.example.fixercurrency.CurrencyFragment"
+        android:label="fragment_currency"
+        tools:layout="@layout/fragment_currency">
+        <argument
+            android:name="selectedProperty"
+            app:argType="com.example.fixercurrency.CurrencyModel"
+            />
+    </fragment>
 </navigation>

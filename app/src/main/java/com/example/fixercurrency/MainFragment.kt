@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fixercurrency.databinding.FragmentMainBinding
 
@@ -19,7 +20,9 @@ class MainFragment : Fragment() {
         val binding = FragmentMainBinding.inflate(layoutInflater)
         binding.lifecycleOwner = this
         binding.viewmodel = mainFragmentViewModel
-        val adapter = FixerItemAdapter()
+        val adapter = FixerItemAdapter(FixerItemAdapter.OnClickListener {
+            mainFragmentViewModel.displayCurrencyView(it)
+        })
         binding.fixerPropertiesList.adapter = adapter
         mainFragmentViewModel.listOfExchangeRates.observe(viewLifecycleOwner, Observer {
             it?.let {
@@ -32,6 +35,13 @@ class MainFragment : Fragment() {
                 if(!recyclerView.canScrollVertically(1) && newState==RecyclerView.SCROLL_STATE_IDLE){
                     mainFragmentViewModel.getPreviousDay()
                 }
+            }
+        })
+        mainFragmentViewModel.navigateToSelectedProperty.observe(viewLifecycleOwner, Observer {
+            if ( null != it ) {
+                val action = MainFragmentDirections.actionMainFragmentToCurrencyFragment(it)
+                findNavController(this).navigate(action)
+                mainFragmentViewModel.displayCurrencyViewComplete()
             }
         })
         return binding.root
