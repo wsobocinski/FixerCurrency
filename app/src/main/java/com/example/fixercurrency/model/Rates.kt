@@ -1,4 +1,4 @@
-package com.example.fixercurrency.web
+package com.example.fixercurrency.model
 
 class Rates(
     val AED: Double,

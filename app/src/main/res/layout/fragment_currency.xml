@@ -1,27 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.example.fixercurrency.viewmodel.CurrencyFragmentViewModel" />
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-
-        tools:context=".CurrencyFragment">
+        tools:context=".fragment.CurrencyFragment">
 
         <TextView
-            android:id="@+id/currencySymbol"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/currencyValue"
+            android:id="@+id/currency_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/hello_blank_fragment" />
+            android:layout_marginTop="8dp"
+            android:textSize="50sp"
+            android:text="@{viewModel.currentCurrency.date}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/date_placeholder"/>
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/currency_symbol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:textSize="50sp"
+            android:text="@{viewModel.currentCurrency.symbol}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/currency_date"
+            tools:text="@string/title_placeholder" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/base_value_euro"
+            android:textSize="50sp"
+            app:layout_constraintBottom_toTopOf="@+id/currency_value"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/currency_symbol" />
+
+        <TextView
+            android:id="@+id/currency_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:textSize="50sp"
+            android:text="@{viewModel.currentCurrency.exchangeValue}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="@string/rate_placeholder" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

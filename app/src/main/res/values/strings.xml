@@ -4,4 +4,6 @@
     <string name="check_previous_day_value">Check Previous Day Value</string>
     <string name="rate_placeholder">rate</string>
     <string name="title_placeholder">title</string>
+    <string name="base_value_euro">Base value: EURO</string>
+    <string name="date_placeholder">2020-07-12</string>
 </resources>

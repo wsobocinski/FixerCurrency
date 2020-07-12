@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.example.fixercurrency.MainFragment"
+        android:name="com.example.fixercurrency.fragment.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
         <action
@@ -16,12 +16,12 @@
     </fragment>
     <fragment
         android:id="@+id/currencyFragment"
-        android:name="com.example.fixercurrency.CurrencyFragment"
+        android:name="com.example.fixercurrency.fragment.CurrencyFragment"
         android:label="fragment_currency"
         tools:layout="@layout/fragment_currency">
         <argument
             android:name="selectedProperty"
-            app:argType="com.example.fixercurrency.CurrencyModel"
+            app:argType="com.example.fixercurrency.model.Currency"
             />
     </fragment>
 </navigation>

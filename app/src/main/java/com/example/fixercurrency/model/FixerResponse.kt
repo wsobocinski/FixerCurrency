@@ -1,6 +1,6 @@
-package com.example.fixercurrency.web
+package com.example.fixercurrency.model
 
-data class FixerProperty(
+data class FixerResponse(
     val base: String,
     val date: String,
     val rates: Rates,
