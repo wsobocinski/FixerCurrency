@@ -38,7 +38,8 @@ class MainFragmentViewModel: ViewModel() {
 
     fun getUpdatedCurrencyList(){
         val newDayCurrencyList = createNewDayCurrencyList()
-        newDayCurrencyList.add(0, (Currency(getFormattedTextDate(), "", getFormattedTextDate())))
+        newDayCurrencyList.add(0, (Currency("Dzień " + getFormattedTextDate(),
+            "", getFormattedTextDate())))
         listOfExchangeRates.value?.addAll(newDayCurrencyList)
         listOfExchangeRates.notifyObserver()
     }
@@ -46,9 +47,9 @@ class MainFragmentViewModel: ViewModel() {
 
     private fun createNewDayCurrencyList(): MutableList<Currency> {
         val currencyList = mutableListOf<Currency>()
-        val newDayCurrencyRates = currentFixerResponse.value?.rates.toString()
+        val newDayCurrencyRates: String = currentFixerResponse.value?.rates.toString()
         if (newDayCurrencyRates != "null") {
-            val splitedRates = newDayCurrencyRates.trim().split(",")
+            val splitedRates = newDayCurrencyRates.split(",")
             for (rate in splitedRates) {
                 val symbolAndRate = rate.split("=")
                 currencyList.add(Currency(
@@ -63,6 +64,7 @@ class MainFragmentViewModel: ViewModel() {
     fun getCurrencyListFromDayBefore() {
         date.value = date.value?.minus(1, ChronoUnit.DAYS)
         fixerRepository.getFixerResponse(getFormattedRequestDate())
+        getUpdatedCurrencyList()
     }
 
     fun getFormattedRequestDate():String {

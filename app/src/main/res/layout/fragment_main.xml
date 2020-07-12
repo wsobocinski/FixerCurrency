@@ -11,6 +11,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fixer_properties_list"
+        android:background="@android:color/darker_gray"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />

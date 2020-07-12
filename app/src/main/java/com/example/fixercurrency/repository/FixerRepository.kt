@@ -44,14 +44,10 @@ object FixerRepository {
             try {
                 val propertyResult = getPropertyDeferred.await()
                 fixer.value = propertyResult
-//                fixer.notifyObserver()
             } catch (e: Exception) {
                 Log.d(TAG, "getFixerResponse: " + e.message)
             }
         }
         return fixer
-    }
-    private fun <T> MutableLiveData<T>.notifyObserver() {
-        this.value = this.value
     }
 }

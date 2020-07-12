@@ -29,9 +29,14 @@ class MainFragment : Fragment() {
 
         binding.fixerPropertiesList.adapter = recycleViewAdapter
 
+        mainFragmentViewModel.listOfExchangeRates.observe(viewLifecycleOwner, Observer {
+                recycleViewAdapter.data = it
+        })
+
         mainFragmentViewModel.currentFixerResponse.observe(viewLifecycleOwner, Observer {
-            mainFragmentViewModel.getUpdatedCurrencyList()
-                recycleViewAdapter.data = mainFragmentViewModel.listOfExchangeRates.value!!
+            if (mainFragmentViewModel.listOfExchangeRates.value?.size == 0) {
+                mainFragmentViewModel.getUpdatedCurrencyList()
+            }
         })
 
         binding.fixerPropertiesList.addOnScrollListener(object : RecyclerView.OnScrollListener(){
