@@ -21,6 +21,8 @@ class MainFragmentViewModel : ViewModel() {
     private var dateForTextFormatter: DateTimeFormatter = DateTimeFormatter
         .ofPattern("dd-MM-yyyy")
         .withZone(ZoneId.systemDefault())
+    enum class updateStatus {COMPLETED, PENDING}
+    var dayFromBeforeUpdateStatus = updateStatus.COMPLETED
 
     var currentFixerResponse = MutableLiveData<FixerResponse>()
     val currenciesList = MutableLiveData<MutableList<Currency>>()
@@ -68,9 +70,11 @@ class MainFragmentViewModel : ViewModel() {
     }
 
     fun getCurrencyListFromDayBefore() {
+        dayFromBeforeUpdateStatus = updateStatus.PENDING
         date.value = date.value?.minus(1, ChronoUnit.DAYS)
         fixerRepository.getFixerResponse(getFormattedRequestDate())
         getUpdatedCurrenciesList()
+        dayFromBeforeUpdateStatus = updateStatus.COMPLETED
     }
 
     fun getFormattedRequestDate(): String {

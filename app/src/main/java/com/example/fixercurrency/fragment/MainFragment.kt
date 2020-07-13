@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.fixercurrency.FixerItemAdapter
 import com.example.fixercurrency.viewmodel.MainFragmentViewModel
 import com.example.fixercurrency.databinding.FragmentMainBinding
+import com.example.fixercurrency.viewmodel.MainFragmentViewModel.updateStatus
 
 
 class MainFragment : Fragment() {
@@ -44,7 +45,8 @@ class MainFragment : Fragment() {
         binding.currenciesRecyclerview.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
-                if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE
+                    && mainFragmentViewModel.dayFromBeforeUpdateStatus == updateStatus.COMPLETED) {
                     mainFragmentViewModel.getCurrencyListFromDayBefore()
                 }
             }
