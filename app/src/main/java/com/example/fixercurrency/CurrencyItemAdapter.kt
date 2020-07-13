@@ -8,17 +8,18 @@ import com.example.fixercurrency.model.Currency
 import kotlinx.android.synthetic.main.currency_item_view.view.*
 
 
-class FixerItemAdapter(private val onClickListener: OnClickListener)
-    : RecyclerView.Adapter<CurrencyItemViewHolder>() {
-    var data =  mutableListOf<Currency>()
+class FixerItemAdapter(private val onClickListener: OnClickListener) :
+    RecyclerView.Adapter<CurrencyItemViewHolder>() {
+    var currenciesList = mutableListOf<Currency>()
         set(value) {
             field = value
             notifyDataSetChanged()
         }
+
     override fun onBindViewHolder(holder: CurrencyItemViewHolder, position: Int) {
-        holder.bind(data[position])
+        holder.bind(currenciesList[position])
         holder.itemView.setOnClickListener {
-            onClickListener.onClick(data[position])
+            onClickListener.onClick(currenciesList[position])
         }
     }
 
@@ -29,7 +30,7 @@ class FixerItemAdapter(private val onClickListener: OnClickListener)
         return CurrencyItemViewHolder(view)
     }
 
-    override fun getItemCount() = data.size
+    override fun getItemCount() = currenciesList.size
 
     class OnClickListener(val clickListener: (currency: Currency) -> Unit) {
         fun onClick(currency: Currency) = clickListener(currency)

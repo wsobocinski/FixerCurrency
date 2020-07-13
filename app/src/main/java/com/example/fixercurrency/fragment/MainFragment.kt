@@ -17,39 +17,41 @@ import com.example.fixercurrency.databinding.FragmentMainBinding
 class MainFragment : Fragment() {
     private val mainFragmentViewModel: MainFragmentViewModel by viewModels()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val binding = FragmentMainBinding.inflate(layoutInflater)
         binding.lifecycleOwner = this
         binding.viewmodel = mainFragmentViewModel
 
         val recycleViewAdapter = FixerItemAdapter(FixerItemAdapter.OnClickListener {
-                mainFragmentViewModel.displayCurrencyView(it)
-            })
+            mainFragmentViewModel.displayCurrencyView(it)
+        })
 
-        binding.fixerPropertiesList.adapter = recycleViewAdapter
+        binding.currenciesRecyclerview.adapter = recycleViewAdapter
 
-        mainFragmentViewModel.listOfExchangeRates.observe(viewLifecycleOwner, Observer {
-                recycleViewAdapter.data = it
+        mainFragmentViewModel.currenciesList.observe(viewLifecycleOwner, Observer {
+            recycleViewAdapter.currenciesList = it
         })
 
         mainFragmentViewModel.currentFixerResponse.observe(viewLifecycleOwner, Observer {
-            if (mainFragmentViewModel.listOfExchangeRates.value?.size == 0) {
-                mainFragmentViewModel.getUpdatedCurrencyList()
+            if (mainFragmentViewModel.currenciesList.value?.size == 0) {
+                mainFragmentViewModel.getUpdatedCurrenciesList()
             }
         })
 
-        binding.fixerPropertiesList.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+        binding.currenciesRecyclerview.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
-                if(!recyclerView.canScrollVertically(1) && newState==RecyclerView.SCROLL_STATE_IDLE){
+                if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
                     mainFragmentViewModel.getCurrencyListFromDayBefore()
                 }
             }
         })
 
         mainFragmentViewModel.navigateToSelectedProperty.observe(viewLifecycleOwner, Observer {
-            if ( it != null && it.exchangeRate != "") {
+            if (it != null && it.exchangeRate != "") {
                 val action = MainFragmentDirections.actionMainFragmentToCurrencyFragment(it)
                 findNavController(this).navigate(action)
                 mainFragmentViewModel.displayCurrencyViewComplete()

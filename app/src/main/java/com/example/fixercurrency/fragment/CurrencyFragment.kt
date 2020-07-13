@@ -14,18 +14,23 @@ import com.example.fixercurrency.viewmodel.CurrencyFragmentViewModel
 import com.example.fixercurrency.viewmodel.CurrencyViewModelFactory
 
 class CurrencyFragment : Fragment() {
-  private val args: CurrencyFragmentArgs by navArgs()
-    lateinit var currencyFragmentViewModel :  CurrencyFragmentViewModel
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
+    private val args: CurrencyFragmentArgs by navArgs()
+    lateinit var currencyFragmentViewModel: CurrencyFragmentViewModel
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val binding = FragmentCurrencyBinding.inflate(layoutInflater)
         binding.lifecycleOwner = this
-        val currencyModel: Currency = args.selectedProperty
-        val viewModelFactory = CurrencyViewModelFactory(currencyModel)
+        val currency: Currency = args.selectedProperty
+
+        val viewModelFactory = CurrencyViewModelFactory(currency)
         currencyFragmentViewModel = ViewModelProvider(
-            this, viewModelFactory).get(CurrencyFragmentViewModel::class.java)
+            this, viewModelFactory
+        ).get(CurrencyFragmentViewModel::class.java)
         binding.viewModel = currencyFragmentViewModel
-        binding.exchangeAmount.addTextChangedListener{
+        binding.exchangeAmount.addTextChangedListener {
             currencyFragmentViewModel.countExchangeValue(it.toString())
         }
         return binding.root
