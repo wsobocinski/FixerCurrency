@@ -5,4 +5,7 @@
     <string name="rate_placeholder">1 : 777.1234</string>
     <string name="title_placeholder">EUR : PLN</string>
     <string name="date_placeholder">Dzień 2020-07-12</string>
+    <string name="current_exchange_rate">Aktualny kurs</string>
+    <string name="money_exchanger">Przelicznik walut</string>
+    <string name="amount_euro">Ilość Euro</string>
 </resources>

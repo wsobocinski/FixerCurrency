@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@{`Dzień ` + viewModel.currentCurrency.date}"
-            android:textSize="50sp"
+            android:textSize="40sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -34,12 +34,27 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginBottom="8dp"
+            android:autoSizeTextType="uniform"
             android:text="@{`EUR : ` + viewModel.currentCurrency.symbol}"
-            android:textSize="50sp"
+            android:textSize="30sp"
+            android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:text="@string/title_placeholder" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/current_exchange_rate"
+            android:textSize="30dp"
+            app:layout_constraintBottom_toTopOf="@+id/currency_value"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/currency_value"
@@ -48,12 +63,50 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:text="@{`1 : ` + viewModel.currentCurrency.exchangeValue}"
-            android:textSize="50sp"
+            android:text="@{`1 : ` + viewModel.currentCurrency.exchangeRate}"
+            android:textSize="30sp"
             app:layout_constraintBottom_toTopOf="@+id/currency_symbol"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:text="@string/rate_placeholder" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/exchange_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:hint="@string/amount_euro"
+            android:inputType="numberDecimal"
+            android:maxWidth="250dp"
+            android:textSize="20sp"
+            android:maxLength="11"
+            app:layout_constraintBottom_toTopOf="@+id/textView2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+        <TextView
+            android:id="@+id/exchanged_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="@{` = ` + viewModel.exChangeRate}"
+            android:textSize="20sp"
+            android:maxWidth="250dp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/exchange_amount"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/exchange_amount"
+            tools:text="123.45 PLN" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/money_exchanger"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/currency_date" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

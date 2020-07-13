@@ -42,6 +42,6 @@ class CurrencyItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     fun bind(fixerProperty: Currency) {
         symbol.setText(fixerProperty.symbol)
-        exchangeValue.setText(fixerProperty.exchangeValue)
+        exchangeValue.setText(fixerProperty.exchangeRate)
     }
 }

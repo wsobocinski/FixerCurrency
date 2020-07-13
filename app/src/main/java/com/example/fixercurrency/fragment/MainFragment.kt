@@ -49,7 +49,7 @@ class MainFragment : Fragment() {
         })
 
         mainFragmentViewModel.navigateToSelectedProperty.observe(viewLifecycleOwner, Observer {
-            if ( it != null && it.exchangeValue != "") {
+            if ( it != null && it.exchangeRate != "") {
                 val action = MainFragmentDirections.actionMainFragmentToCurrencyFragment(it)
                 findNavController(this).navigate(action)
                 mainFragmentViewModel.displayCurrencyViewComplete()
